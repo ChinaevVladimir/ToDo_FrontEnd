@@ -1,0 +1,73 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.editInput {
+  height: 20%;
+}
+
+#contentPage {
+  width: 30%;
+  overflow-y: auto;
+  height: 600px;
+}
+
+.taskContainerForEdit {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.taskContainer {
+  display: flex;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  justify-content: center;
+  align-items: baseline;
+  border: 2px solid black;
+}
+
+.textTask {
+  font-size: 18px;
+  color: black;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5%;
+  word-break: break-word;
+}
+
+.doneText {
+  color: rgba(0, 0, 0, 0.3);
+  text-decoration: line-through;
+}
+
+.editSvg {
+  margin-right: 4%;
+}
+
+@media (max-width: 820px) {
+  #contentPage {
+    width: 35%;
+  }
+}
+
+@media (max-width: 414px) {
+  #contentPage {
+    width: 62%;
+    height: 400px;
+  }
+}
+
+@media (max-width: 280px) {
+  #contentPage {
+    width: 92%;
+  }
+}
