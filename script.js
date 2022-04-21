@@ -1,4 +1,4 @@
-let allTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let allTasks = [];
 let valueInput = "";
 let input = null;
 let flagForEditing = -1;
@@ -12,14 +12,12 @@ window.onload = init = async () => {
   });
   let result = await resp.json();
   allTasks = result.data;
-  console.log(allTasks);
   render();
 };
 
 const onClickButton = async () => {
-  if (input.value.trim() === "") {
-    alert("пожалуйста введите текст");
-  } else {
+  if (input.value.trim() === "") alert("пожалуйста введите текст");
+  else {
     allTasks.push({
       text: valueInput,
       isCheck: false,
@@ -43,15 +41,11 @@ const onClickButton = async () => {
   render();
 };
 
-const updateValue = (event) => {
-  valueInput = event.target.value;
-};
+const updateValue = (event) => (valueInput = event.target.value);
 
 const render = () => {
   const content = document.getElementById("contentPage");
-  while (content.firstChild) {
-    content.removeChild(content.firstChild);
-  }
+  while (content.firstChild) content.removeChild(content.firstChild);
   allTasks.sort((a, b) => a.isCheck - b.isCheck);
   allTasks.map((item, index) => {
     if (flagForEditing === index) {
@@ -140,9 +134,8 @@ const saveTask = async (index, timeText) => {
   flagForEditing = -1;
   let text = timeText;
   let id = allTasks[index].id;
-  if (timeText.trim() === "") {
-    alert("пожалуйста введите новое значение");
-  } else {
+  if (timeText.trim() === "") alert("пожалуйста введите новое значение");
+  else {
     const resp = await fetch(`http://localhost:8000/updateTask`, {
       method: "PATCH",
       headers: {
