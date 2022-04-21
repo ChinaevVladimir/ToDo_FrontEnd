@@ -10,18 +10,14 @@ window.onload = init = async () => {
   const resp = await fetch("http://localhost:8000/allTasks", {
     method: "GET",
   });
-  let result = await resp.json();
+  const result = await resp.json();
   allTasks = result.data;
   render();
 };
 
 const onClickButton = async () => {
-  if (input.value.trim() === "") alert("пожалуйста введите текст");
+  if (input.value.trim() === false) alert("пожалуйста введите текст");
   else {
-    allTasks.push({
-      text: valueInput,
-      isCheck: false,
-    });
     const resp = await fetch("http://localhost:8000/createTask ", {
       method: "POST",
       headers: {
@@ -33,7 +29,7 @@ const onClickButton = async () => {
         isCheck: false,
       }),
     });
-    let result = await resp.json();
+    const result = await resp.json();
     allTasks = result.data;
     valueInput = "";
     input.value = "";
@@ -94,9 +90,9 @@ const render = () => {
   });
 };
 
-const onChangeCheckBox = async (index) => {
-  let status = !allTasks[index].isCheck;
-  let id = allTasks[index].id;
+const onChangeCheckBox = async () => {
+  const { id, isCheck } = task;
+  isCheck = !isCheck;
   const resp = await fetch(`http://localhost:8000/updateTask`, {
     method: "PATCH",
     headers: {
@@ -105,7 +101,7 @@ const onChangeCheckBox = async (index) => {
     },
     body: JSON.stringify({
       id,
-      isCheck: status,
+      isCheck,
     }),
   });
   const result = await resp.json();
@@ -134,7 +130,7 @@ const saveTask = async (index, timeText) => {
   flagForEditing = -1;
   let text = timeText;
   let id = allTasks[index].id;
-  if (timeText.trim() === "") alert("пожалуйста введите новое значение");
+  if (timeText.trim() === false) alert("пожалуйста введите новое значение");
   else {
     const resp = await fetch(`http://localhost:8000/updateTask`, {
       method: "PATCH",
