@@ -16,7 +16,7 @@ window.onload = init = async () => {
 };
 
 const onClickButton = async () => {
-  if (input.value.trim() === false) alert("пожалуйста введите текст");
+  if (!input.value.trim()) alert("пожалуйста введите текст");
   else {
     const resp = await fetch("http://localhost:8000/createTask ", {
       method: "POST",
@@ -130,7 +130,7 @@ const saveTask = async (index, timeText) => {
   flagForEditing = -1;
   let text = timeText;
   let id = allTasks[index].id;
-  if (timeText.trim() === false) alert("пожалуйста введите новое значение");
+  if (!timeText.trim()) alert("пожалуйста введите новое значение");
   else {
     const resp = await fetch(`http://localhost:8000/updateTask`, {
       method: "PATCH",
