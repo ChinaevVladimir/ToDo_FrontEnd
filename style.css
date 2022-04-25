@@ -24,6 +24,8 @@
   display: flex;
   justify-content: center;
   align-items: baseline;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .taskContainer {
@@ -42,6 +44,7 @@
   margin-right: 5%;
   margin-top: 5%;
   word-break: break-word;
+  width: 65%;
 }
 
 .doneText {

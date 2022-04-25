@@ -7,7 +7,7 @@ let timeText = "";
 window.onload = init = async () => {
   input = document.getElementById("addTask");
   input.addEventListener("change", updateValue);
-  const resp = await fetch("http://localhost:8000/allTasks", {
+  const resp = await fetch("http://localhost:7070/allTasks", {
     method: "GET",
   });
   const result = await resp.json();
@@ -18,7 +18,7 @@ window.onload = init = async () => {
 const onClickButton = async () => {
   if (!input.value.trim()) alert("пожалуйста введите текст");
   else {
-    const resp = await fetch("http://localhost:8000/createTask ", {
+    const resp = await fetch("http://localhost:7070/createTasks ", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -90,22 +90,29 @@ const render = () => {
   });
 };
 
-const onChangeCheckBox = async () => {
-  const { id, isCheck } = task;
+const onChangeCheckBox = async (index) => {
+  let text = allTasks[index].text;
+  let _id = allTasks[index]._id;
+  let isCheck = allTasks[index].isCheck;
   isCheck = !isCheck;
-  const resp = await fetch(`http://localhost:8000/updateTask`, {
+  console.log(isCheck);
+  console.log(text);
+  const resp = await fetch(`http://localhost:7070/updateTasks`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({
-      id,
+      text,
+      _id,
       isCheck,
     }),
   });
   const result = await resp.json();
   allTasks = result.data;
+  console.log(isCheck, "after db");
+
   render();
 };
 
@@ -116,7 +123,7 @@ const editTask = (index) => {
 
 const removeTask = async (index) => {
   const resp = await fetch(
-    `http://localhost:8000/deleteTask?id=${allTasks[index].id}`,
+    `http://localhost:7070/deleteTasks?_id=${allTasks[index]._id}`,
     {
       method: "DELETE",
     }
@@ -129,18 +136,23 @@ const removeTask = async (index) => {
 const saveTask = async (index, timeText) => {
   flagForEditing = -1;
   let text = timeText;
-  let id = allTasks[index].id;
+  let _id = allTasks[index]._id;
+  let isCheck = allTasks[index].isCheck;
+  console.log(isCheck);
+  console.log(_id);
+  console.log(text);
   if (!timeText.trim()) alert("пожалуйста введите новое значение");
   else {
-    const resp = await fetch(`http://localhost:8000/updateTask`, {
+    const resp = await fetch(`http://localhost:7070/updateTasks`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        id,
+        _id,
         text,
+        isCheck,
       }),
     });
     const result = await resp.json();
