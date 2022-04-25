@@ -91,12 +91,8 @@ const render = () => {
 };
 
 const onChangeCheckBox = async (index) => {
-  let text = allTasks[index].text;
-  let _id = allTasks[index]._id;
-  let isCheck = allTasks[index].isCheck;
+  let { text, _id, isCheck } = allTasks[index];
   isCheck = !isCheck;
-  console.log(isCheck);
-  console.log(text);
   const resp = await fetch(`http://localhost:7070/updateTasks`, {
     method: "PATCH",
     headers: {
@@ -111,8 +107,6 @@ const onChangeCheckBox = async (index) => {
   });
   const result = await resp.json();
   allTasks = result.data;
-  console.log(isCheck, "after db");
-
   render();
 };
 
@@ -135,13 +129,8 @@ const removeTask = async (index) => {
 
 const saveTask = async (index, timeText) => {
   flagForEditing = -1;
-  let text = timeText;
-  let _id = allTasks[index]._id;
-  let isCheck = allTasks[index].isCheck;
-  console.log(isCheck);
-  console.log(_id);
-  console.log(text);
-  if (!timeText.trim()) alert("пожалуйста введите новое значение");
+  let { text, _id, isCheck } = allTasks[index];
+  if (!timeText.trim()) alert("пожалуйста, введите новое значение");
   else {
     const resp = await fetch(`http://localhost:7070/updateTasks`, {
       method: "PATCH",
