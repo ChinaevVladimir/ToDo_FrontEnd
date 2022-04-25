@@ -129,7 +129,8 @@ const removeTask = async (index) => {
 
 const saveTask = async (index, timeText) => {
   flagForEditing = -1;
-  let { text, _id, isCheck } = allTasks[index];
+  text = timeText;
+  const { _id, isCheck } = allTasks[index];
   if (!timeText.trim()) alert("пожалуйста, введите новое значение");
   else {
     const resp = await fetch(`http://localhost:7070/updateTasks`, {
